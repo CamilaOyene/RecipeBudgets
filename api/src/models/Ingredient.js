@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     sequelize.definde('ingredient', {
         id: {
             type: DataTypes.UUID, // Utilizamos UUID para el ID del ingrediente
-            defaultValue: Sequelize.UUIDV4, // Valor por defecto generado automáticamente
+            defaultValue: DataTypes.UUIDV4, // Valor por defecto generado automáticamente
             primaryKey: true, // Hacer que este campo sea la clave primaria
             allowNull: false,
         },
