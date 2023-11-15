@@ -40,6 +40,10 @@ Recipe.belongsTo(User, { through: 'UserRecipe' }); // Una receta pertenece a un 
 Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredient' }); // Una receta puede tener muchos ingredientes
 Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredient' }); // Un ingrediente puede estar en muchas recetas
 
+// Relación entre User e Ingredient
+User.belongsToMany(Ingredient, { through: 'UserIngredient' }); // Un usuario puede tener muchos ingredientes con diferentes precios
+Ingredient.belongsToMany(User, { through: 'UserIngredient' }); // Un ingrediente puede tener muchos usuarios con diferentes precios
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
