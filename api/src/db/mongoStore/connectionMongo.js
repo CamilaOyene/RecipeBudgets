@@ -1,5 +1,5 @@
 import MongoStore from 'connect-mongo';
-import { connectionMongoDb } from '../db/connectionDataBase';
+import { connectionMongoDb } from '../connectionDataBase.js';
 
 export const mongoStoreOptions = {
     store: MongoStore.create({
