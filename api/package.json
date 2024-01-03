@@ -1,23 +1,33 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "App para creación de presupuestos gastronomicos ",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --exec node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CamilaOyene/RecipeBudgets.git"
+  },
+  "author": "oyene camila",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CamilaOyene/RecipeBudgets/issues"
+  },
+  "homepage": "https://github.com/CamilaOyene/RecipeBudgets#readme",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "cookie-parser": "^1.4.6",
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
-    "nodemon": "^2.0.22",
-    "axios": "^1.4.0",
-    "pg": "^8.11.0",
     "express": "^4.18.2",
-    "sequelize": "^6.31.1",
-    "dotenv": "^16.1.0"
-
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "mongoose-paginate-v2": "^1.7.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.2"
   }
 }

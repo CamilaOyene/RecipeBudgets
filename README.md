@@ -13,7 +13,10 @@ RecipeBudgets es una aplicación diseñada para facilitar a los trabajadores gas
 
 - Node.js
 - React
-- PostgreSQL
+- MongoDB
+- Mongoose
+- JWT
+
 
 ## Instrucciones de Instalación
 
