@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { mongoStoreOptions } from './db/mongoStore/connectionMongo.js';
+import session from 'express-session'
 
 // import routes from './routes/index.js';
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(session(mongoStoreOptions));
 
 
 //conectar a la base de datos antes de configurar las rutas
