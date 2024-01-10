@@ -1,6 +1,13 @@
 import { UserModel } from '../../db/models/userSchema.js';
 import { hashPassword } from '../../helpers/bcryptHelper.js';
 
+/**
+ * Registra un nuevo usuario en la base de datos.
+ * @param {Object} userData - Datos del usuario a registrar.
+ * @returns {Promise<Object>} - Objeto del usuario registrado.
+ * @throws {Error} - Error en caso de fallo durante el registro.
+ */
+
 export const registerUser = async (userData) => {
     try {
         //Verificar si ya existe un usuario con el mismo email.
