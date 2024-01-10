@@ -1,4 +1,3 @@
-import Router from 'express';
 import { handleLogin } from '../../../handlers/auth/loginHandler.js';
 
 /**
@@ -8,9 +7,8 @@ import { handleLogin } from '../../../handlers/auth/loginHandler.js';
  * @param {Function} next - Función para pasar al siguiente middleware.
  */
 
-const loginController = Router()
 
-loginController.post('/', async(req, res, next) => {
+const loginController = async(req, res, next) => {
     try {
         const { email, password} = req.body;
         //Llamar al handler para manejar la solicitud de inicio de sesión
@@ -23,6 +21,6 @@ loginController.post('/', async(req, res, next) => {
         //Propagar el error al middleware de manejo de errores si ocurre algún problema
         next(error);
     }
-});
+};
 
 export default loginController;

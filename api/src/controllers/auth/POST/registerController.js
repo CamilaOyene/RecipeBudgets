@@ -1,4 +1,3 @@
-import Router from 'express';
 import { handleRegistration } from '../../../handlers/auth/registerHandler.js';
 
 /**
@@ -8,9 +7,7 @@ import { handleRegistration } from '../../../handlers/auth/registerHandler.js';
  * @param {Function} next - Función para pasar al siguiente middleware.
  */
 
-const registerController = Router();
-
-registerController.post('/', async (req, res, next) => {
+const registerController = async (req, res, next) => {
     try {
         //Llamar al handler para manejar la solicitud de registro
         const result = await handleRegistration(req.body);
@@ -22,6 +19,6 @@ registerController.post('/', async (req, res, next) => {
         //Propagar el error al middleware de manejo de errores si ocurre algún problema
         throw error;
     }
-})
+}
 
 export default registerController;

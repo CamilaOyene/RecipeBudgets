@@ -3,6 +3,7 @@ import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { mongoStoreOptions } from './db/mongoStore/connectionMongo.js';
 import session from 'express-session';
+import router from './routes/index.js';
 
 const app = express();
 
@@ -14,9 +15,9 @@ app.use(session(mongoStoreOptions));
 
 
     //crea rutas
-    // app.use(routes);
+    app.use(router);
     
-    //middleware de errores
+    //Middleware de errores
     app.use(errorHandler);
     
 
