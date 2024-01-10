@@ -1,13 +1,13 @@
 # RecipeBudgets
 
-RecipeBudgets es una aplicación diseñada para facilitar a los trabajadores gastronómicos la tarea de calcular presupuestos en base a recetas. La idea principal es agilizar el proceso al almacenar información sobre los ingredientes y sus precios en una base de datos, permitiendo que los presupuestos se generen automáticamente cuando se utilizan esos ingredientes en recetas posteriores.
+RecipeBudgets es una aplicación diseñada para facilitar la tarea de cálculo de presupuestos para profesionales culinarios al almacenar información sobre ingredientes y sus precios en una base de datos. Esto permite que se generen presupuestos automáticamente cuando se utilizan estos ingredientes en recetas posteriores.
 
 ## Características Principales
 
 - Guardar recetas con detalles sobre ingredientes y sus precios.
 - Actualizar precios de ingredientes según sea necesario.
 - Generar automáticamente presupuestos al planificar nuevas recetas.
-- Modificar presupuestos en respuesta a cambios en los costos, como costos laborales.
+- Modificar presupuestos en respuesta a cambios en costos, como costos laborales.
 
 ## Tecnologías Utilizadas
 
@@ -17,13 +17,12 @@ RecipeBudgets es una aplicación diseñada para facilitar a los trabajadores gas
 - Mongoose
 - JWT
 
-
 ## Instrucciones de Instalación
 
 ### API (Backend)
 
 1. En la carpeta `Api`, ejecuta `npm install` para instalar las dependencias.
-2. Ejecuta `npm start` para iniciar el servidor de la API.
+2. Ejecuta `npm run dev` para iniciar el servidor de la API.
 
 ### Cliente (Frontend)
 
@@ -32,13 +31,13 @@ RecipeBudgets es una aplicación diseñada para facilitar a los trabajadores gas
 
 ## Configuración de la Base de Datos
 
-Asegúrate de tener PostgreSQL instalado y crea una base de datos llamada `recipeBudgets`.
+Asegúrate de tener MongoDB instalado y crea una base de datos llamada `recipe-budgets`.
 
 ## Instrucciones de Uso
 
 - La aplicación consta de dos partes: la API (backend) y el cliente (frontend).
-- Accede al servidor API mediante `http://localhost:3001`.
-- Accede al cliente en desarrollo mediante el puerto especificado (no necesariamente 3000).
+- Accede al servidor de la API mediante `http://localhost:3001`.
+- Accede al cliente en modo desarrollo en el puerto especificado (no necesariamente 3000).
 
 ## Estructura del Proyecto
 
