@@ -10,7 +10,7 @@ import { handleRegistration } from '../../../handlers/auth/registerHandler.js';
 
 const registerController = Router();
 
-registerController.post('/', async (req, res, next) => { 
+registerController.post('/', async (req, res, next) => {
     try {
         //Llamar al handler para manejar la solicitud de registro
         const result = await handleRegistration(req.body);
