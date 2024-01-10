@@ -9,6 +9,16 @@ import { registerUser } from '../../services/auth/registerService.js';
 
 export const handleRegistration = async(userData) => {
     try {
+        //Validar que se proporcionen datos de usuario
+        if(!userData || Object.keys(userData).length === 0){
+            throw new Error('Datos de usuario no proporcionados');
+        }
+
+        //Validar que se proporcionen email y password
+        if(!userData.email || !userData.password){
+            throw new Error('Correo electrónico y contraseña son obligatorios');
+        }
+
         //Llamar al servicio para registrar al usuario
         const newUser = await registerUser(userData);
 
@@ -16,7 +26,16 @@ export const handleRegistration = async(userData) => {
         return {status: 201, data: newUser};
     } catch (error) {
         console.log('Error en registerHandle', error);
-        //propagar el error si ocurre algún problema durante el registro
-        throw error
+        //Manejar errores específicos 
+        if(error.message === 'Usuario ya registrado'){
+            return {status:400, error: 'El usuario ya está registrado'};
+        }else if(error.message === 'Datos de usuario no proporcionados'){
+            return {status:400, error: 'Se requieren datos de usuario para el registro'};            
+        }else if(error.message === 'Correo electrónico y contraseña son obligatorios'){
+            return {status:400, error: 'Correo electrónico y contraseña son obligatorios'};
+        }else{
+            //propagar otros errores inesperados
+            throw error
+        }
     }
 }
