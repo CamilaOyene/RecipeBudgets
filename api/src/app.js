@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { mongoStoreOptions } from './db/mongoStore/connectionMongo.js';
-import session from 'express-session';
 import router from './routes/index.js';
 
 const app = express();
@@ -14,11 +14,11 @@ app.use(cors());
 app.use(session(mongoStoreOptions));
 
 
-    //crea rutas
-    app.use(router);
-    
-    //Middleware de errores
-    app.use(errorHandler);
-    
+//crea rutas
+app.use(router);
+
+//Middleware de errores
+app.use(errorHandler);
+
 
 export default app 

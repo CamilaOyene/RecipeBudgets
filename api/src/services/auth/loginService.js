@@ -20,17 +20,28 @@ export const loginUser = async (email, password) => {
         }
 
         //Comparar la contraseña proporcionada con la contraseña almacenada.
-        const isPasswordValid = await comparePassword()
+        const isPasswordValid = await comparePassword(password, user.password)
 
         //Verificar la validez de la contraseña
         if (!isPasswordValid) {
             throw new Error('Invalid email or password');
         }
 
+
         //Generar token JWT para el usuario autenticado
         const token = generateToken({ userId: user._id, email: user.email });
 
-        return { token, user };
+        // Agregar la propiedad loggedIn al objeto user
+        const userWithoutSensitiveInfo = {
+            loggedIn: true,
+            id: user._id,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            age: user.age,
+            role: user.role,
+        };
+        return { token, userWithoutSensitiveInfo };
 
     } catch (error) {
         console.log('error en loginService ', error)

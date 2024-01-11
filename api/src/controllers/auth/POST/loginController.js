@@ -8,12 +8,15 @@ import { handleLogin } from '../../../handlers/auth/loginHandler.js';
  */
 
 
-const loginController = async(req, res, next) => {
+const loginController = async (req, res, next) => {
     try {
-        const { email, password} = req.body;
+        const { email, password } = req.body;
         //Llamar al handler para manejar la solicitud de inicio de sesión
         const result = await handleLogin(email, password);
 
+        //Almacenar userWithoutSensitiveInfo en la sesion;
+        req.session.user = result.data.userWithoutSensitiveInfo;
+        
         //Enviar la respuesta al cliente con el estado, token y
         res.status(result.status).json(result.data);
     } catch (error) {

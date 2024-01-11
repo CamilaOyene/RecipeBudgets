@@ -16,10 +16,10 @@ export const handleLogin = async (email, password) => {
         }
 
         //Llamar al servicio para autenticar al usuario y generar un token
-        const { token, user } = await loginUser(email, password);
+        const { token, userWithoutSensitiveInfo } = await loginUser(email, password);
         
         //Retornar el resultado exitoso con el token y datos del usuario autenticado
-        return { status: 201, data: { token, user } };
+        return { status: 201, data: { token, userWithoutSensitiveInfo } };
 
     } catch (error) {
         console.log('error en loginHandler', error);
