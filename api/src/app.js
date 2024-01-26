@@ -4,12 +4,14 @@ import session from 'express-session';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { mongoStoreOptions } from './db/mongoStore/connectionMongo.js';
 import router from './routes/index.js';
+import morgan from 'morgan';
 
 const app = express();
 
 //agrega el middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(cors());
 app.use(session(mongoStoreOptions));
 
