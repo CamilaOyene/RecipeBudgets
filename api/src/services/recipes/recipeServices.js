@@ -61,10 +61,10 @@ export const getRecipeById = async (recipeId) => {
  * @throws {Error} - Error en caso de fallo.
  */
 
-export const updateRecipeById = async (recipeId, updateData) => {
+export const updateRecipeById = async (recipeId, updatedData) => {
 
     try {
-        const updateRecipe = await RecipeModel.findByIdAndUpdate(recipeId, updateDate, { new: true });
+        const updateRecipe = await RecipeModel.findByIdAndUpdate(recipeId, updatedDate, { new: true });
         if (!updateRecipe) {
             throw new Error('Recipe not found');
         }
@@ -86,7 +86,7 @@ export const updateRecipeById = async (recipeId, updateData) => {
 export const deleteRecipeById = async (recipeId) => {
     try {
         const deletedRecipe = await RecipeModel.findByIdAndDelete(recipeId);
-        if (!deteledRecipe) {
+        if (!deletedRecipe) {
             throw new Error('Recipe not found');
         }
         return { message: 'Recipe deleted successfully' };

@@ -4,7 +4,6 @@ import {
     getRecipeById,
     updateRecipeById,
     deletedRecipeById,
-    deleteRecipeById
 } from '../../services/recipes/recipeServices.js';
 
 /**
@@ -31,7 +30,7 @@ export const handleCreateRecipe = async (recipeData) => {
  * @throws {Error} - Error en caso de fallo.
  */
 
-export const getAllRecipes = async () => {
+export const handleGetAllRecipes = async () => {
     try {
         const recipes = await getAllRecipes();
         return { status: 200, data: recipes }

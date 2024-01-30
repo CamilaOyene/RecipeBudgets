@@ -1,10 +1,12 @@
 import Router from 'express';
 import authRouter from './authRoutes.js';
-import recipesRouter from './recipesRoutes.js';
+import recipeRouter from './recipesRoutes.js';
+import ingredientRouter from './ingredientsRoutes.js';
 
 const router = Router();
 
 router.use('/auth',authRouter);
-router.use('/recipes', recipesRouter);
+router.use('/recipes', recipeRouter);
+router.use('ingredient', ingredientRouter);
 
 export default router;
