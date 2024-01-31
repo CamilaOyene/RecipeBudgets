@@ -3,7 +3,7 @@ import {
     getAllRecipes,
     getRecipeById,
     updateRecipeById,
-    deletedRecipeById,
+    deleteRecipeById,
 } from '../../services/recipes/recipeServices.js';
 
 /**
@@ -85,7 +85,7 @@ export const handleUpdateRecipeById = async (recipeId, updateData) => {
 
 export const handleDeleteRecipeById = async (recipeId) => {
     try {
-        const result = await deletedRecipeById(recipeId);
+        const result = await deleteRecipeById(recipeId);
         return { status: 200, data: result };
     } catch (error) {
         console.log('error en handleDeleteRecipeById', error);

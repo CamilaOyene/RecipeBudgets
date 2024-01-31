@@ -1,4 +1,4 @@
-import { IngredientModel } from '../../db/models/ingredientSchema';
+import { IngredientModel } from '../../db/models/ingredientSchema.js';
 
 /**
  * Servicio para crear un nuevo ingrediente.

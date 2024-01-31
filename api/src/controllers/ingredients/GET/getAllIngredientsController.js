@@ -1,5 +1,4 @@
 import { handleGetAllIngredients } from '../../../handlers/ingredients/ingredientsHandlers.js';
-
 /**
  * Controlador para la creación de un nuevo ingrediente.
  * @param {Object} req - Objeto de solicitud de Express.

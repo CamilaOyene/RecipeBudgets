@@ -5,7 +5,6 @@ import {
     getIngredientById,
     updateIngredientById,
     deleteIngredientById,
-    deleteIngredientById
 } from '../../services/ingredients/ingredientServices.js';
 import mongoose from 'mongoose';
 
@@ -43,9 +42,15 @@ export const handleCreateIngredient = async (ingredientData) => {
  * @throws {Error} - Error en caso de fallo.
  */
 
-export const hadleGetAllIngredients = async () => {
+export const handleGetAllIngredients = async () => {
     try {
         const ingredients = await getAllIngredients();
+
+        if(!ingredients){
+            throw new Error('No se encuentran ingredientes');
+        }
+
+        
         return { status: 200, data: ingredients };
     } catch (error) {
         console.log('error en hadleGetAllIngredients ,', error)

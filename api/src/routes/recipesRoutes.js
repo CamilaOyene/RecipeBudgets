@@ -1,11 +1,11 @@
 // routes/recipes/recipeRoutes.js
 import Router from 'express';
-import createRecipeController from '../../../controllers/recipes/POST/createRecipeController.js';
-import getAllRecipesController from '../../../controllers/recipes/GET/getAllRecipesController.js';
-import getRecipeByIdController from '../../../controllers/recipes/GET/getRecipeByIdController.js';
-import updateRecipeByIdController from '../../../controllers/recipes/PUT/updateRecipeByIdController.js';
-import deleteRecipeByIdController from '../../../controllers/recipes/DELETE/deleteRecipeByIdController.js';
-import { createRecipeValidation, updateRecipeValidation } from '../../../middlewares/validationMiddleware.js';
+import createRecipeController from '../controllers/recipes/POST/createRecipeController.js';
+import getAllRecipesController from '../controllers/recipes/GET/getAllRecipesController.js';
+import getRecipeByIdController from '../controllers/recipes/GET/getRecipeByIdController.js';
+import updateRecipeByIdController from '../controllers/recipes/UPDATE/updateRecipeByIdController.js';
+import deleteRecipeByIdController from '../controllers/recipes/DELETE/deleteRecipeByIdController.js';
+import { createRecipeValidation, updateRecipeValidation } from '../middlewares/validationMiddleware.js';
 
 const recipeRouter = Router();
 
