@@ -10,7 +10,7 @@ import { handleCreateIngredient } from '../../../handlers/ingredients/ingredient
 const createIngredientController = async (req, res, next) => {
     try {
         const ingredientData = req.body;
-        const { userId } = req.params;
+        const { userId } = req.body;
         ingredientData.userId = userId;
 
         console.log('ingredientData controller', ingredientData);

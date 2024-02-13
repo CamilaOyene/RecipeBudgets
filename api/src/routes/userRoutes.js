@@ -26,18 +26,18 @@ userRouter.get("/:userId", getUserDetailsByIdController);
 
 //Rutas para ingredientes de un usuario en particular
 //Ruta para crar un nuevo ingrediente
-userRouter.post('/:userId/igredients/create', createIngredientController);
+userRouter.post('/:userId/ingredients/create', createIngredientController);
 // Ruta para obtener todos los ingredientes
-userRouter.get('/:userId/igredients/all', getAllIngredientsController);
+userRouter.get('/:userId/ingredients/all', getAllIngredientsController);
 
 // Ruta para obtener un ingrediente por su ID
-userRouter.get('/:userId/igredients/:ingredientId', getIngredientByIdController);
+userRouter.get('/:userId/ingredients/:ingredientId', getIngredientByIdController);
 
 // Ruta para actualizar un ingrediente por su ID
-userRouter.put('/:userId/igredients/:ingredientId', updateIngredientByIdController);
+userRouter.put('/:userId/ingredients/:ingredientId', updateIngredientByIdController);
 
 // Ruta para eliminar un ingrediente por su ID
-userRouter.delete('/:userId/igredients/:ingredientId', deleteIngredientByIdController);
+userRouter.delete('/:userId/ingredients/:ingredientId', deleteIngredientByIdController);
 
 
 

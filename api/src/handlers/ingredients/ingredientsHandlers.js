@@ -1,6 +1,6 @@
 import { IngredientModel } from '../../db/models/ingredientSchema.js';
 import {
-    createIngredient,
+    createOrGetIngredient,
     getAllIngredients,
     getIngredientById,
     updateIngredientById,
@@ -18,20 +18,20 @@ import mongoose from 'mongoose';
 
 export const handleCreateIngredient = async (ingredientData) => {
     try {
-        //Validar datos requeridos
+        // Validar datos requeridos
         if (!ingredientData.name || !ingredientData.unit || !ingredientData.cost_per_unit) {
             throw new Error('Nombre, unidad y costo por unidad son campos obligatorios.');
         }
 
-        //Validar que el nombre del ingrediente no esté duplicado
-        const existingIngredient = await IngredientModel.findOne({ name: ingredientData.name });
-        if (existingIngredient) {
-            throw new Error('Ya existe un ingrediente con este nombre.');
+        // Crear o obtener el ingrediente
+        const newIngredient = await createOrGetIngredient(ingredientData.name, ingredientData.userId);
+        if (newIngredient) {
+            return { status: 201, data: newIngredient };
+        } else {
+            throw new Error('No se pudo crear el ingrediente.');
         }
-        const newIngredient = await createIngredient(ingredientData);
-        return { status: 201, data: newIngredient };
     } catch (error) {
-        console.log('error en handleCreateIngredient ,', error)
+        console.log('error en handleCreateIngredient:', error);
         throw error;
     }
 };
