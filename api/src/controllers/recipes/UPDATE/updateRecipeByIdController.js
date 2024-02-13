@@ -7,14 +7,15 @@ import { handleUpdateRecipeById } from "../../../handlers/recipes/recipesHandler
  * @param {Function} next - Función para pasar al siguiente middleware.
  */
 
-const updateRecipeByIdController = async (req,res,next) => {
+const updateRecipeByIdController = async (req, res, next) => {
     try {
-        const recipeId = req.params.recipeId;
         const updatedData = req.body;
+        const { recipeId } = req.params;
+        
         const result = await handleUpdateRecipeById(recipeId, updatedData);
         res.status(result.status).json(result.data);
     } catch (error) {
-        console.log('error en updateRecipeByIdController', error );
+        console.log('error en updateRecipeByIdController', error);
         next(error);
     }
 }

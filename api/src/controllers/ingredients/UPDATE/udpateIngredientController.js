@@ -7,14 +7,17 @@ import { handleUpdateIngredientById } from '../../../handlers/ingredients/ingred
  * @param {Function} next - Función para pasar al siguiente middleware.
  */
 
-const updateIngredientByIdController = async (req,res,next) => {
+const updateIngredientByIdController = async (req, res, next) => {
     try {
-        const { ingredientId} = req.params;
         const updateData = req.body;
+        const { ingredientId } = req.params;
+        const { userId } = req.params;
+        updateData.userId = userId;
+        
         const result = await handleUpdateIngredientById(ingredientId, updateData);
         res.status(result.status).json(result.data);
     } catch (error) {
-        console.log('error en updateIngredientByIdController , ', error) 
+        console.log('error en updateIngredientByIdController , ', error)
         next(error)
     }
 };

@@ -8,6 +8,7 @@ import { IngredientModel } from '../../db/models/ingredientSchema.js';
  */
 
 export const createIngredient = async (ingredientData) => {
+    console.log('createingredient data ', ingredientData)
     try {
         const newIngredient = await IngredientModel.create(ingredientData);
         return newIngredient;
@@ -17,6 +18,20 @@ export const createIngredient = async (ingredientData) => {
     }
 };
 
+/**
+ * Servicio para crear o recuperar un ingrediente por su nombre y usuario.
+ * @param {string} name -  nombre del ingrediente.
+ * @param {string} userId - ID del usuario al que pertenece el ingrediente.
+*/
+export const createOrGetIngredient = async (name, userId) => {
+    try {
+        const existingIngredient = await IngredientModel.findOne({ name, userId });
+        return existingIngredient || createIngredient({ name, userId })
+    } catch (error) {
+        console.log('error en createOrGetIngredient, services => ', error)
+        throw error;
+    }
+};
 
 /**
  * Servicio para obtener todos los igredientes.

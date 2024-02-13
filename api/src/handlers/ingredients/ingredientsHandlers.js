@@ -26,7 +26,7 @@ export const handleCreateIngredient = async (ingredientData) => {
         //Validar que el nombre del ingrediente no esté duplicado
         const existingIngredient = await IngredientModel.findOne({ name: ingredientData.name });
         if (existingIngredient) {
-            throw new Error('Ya eciste un ingrediente con este nombre.');
+            throw new Error('Ya existe un ingrediente con este nombre.');
         }
         const newIngredient = await createIngredient(ingredientData);
         return { status: 201, data: newIngredient };

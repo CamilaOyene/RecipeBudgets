@@ -9,6 +9,6 @@ authRouter.post('/register', registerController);
 //Ruta para el inicio de sesión 
 authRouter.post('/login', loginController);
 //Ruta para cerrar sesión
-authRouter.post('logout', logoutController);
+authRouter.post('/logout', logoutController);
 
 export default authRouter;

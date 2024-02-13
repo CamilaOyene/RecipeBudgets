@@ -28,7 +28,7 @@ export const handleRegistration = async(userData) => {
         console.log('Error en registerHandle', error);
         //Manejar errores específicos 
         if(error.message === 'Usuario ya registrado'){
-            return {status:400, error: 'El usuario ya está registrado'};
+            return {status:400, message: 'El usuario ya está registrado'};
         }else if(error.message === 'Datos de usuario no proporcionados'){
             return {status:400, error: 'Se requieren datos de usuario para el registro'};            
         }else if(error.message === 'Correo electrónico y contraseña son obligatorios'){

@@ -19,7 +19,7 @@ export const createRecipeValidation = [
     body('instructions').notEmpty().withMessage('Instructions are required'),
     body('image').notEmpty().withMessage('Image URL is required'),
     body('ingredients').notEmpty().withMessage('Ingredients should be an array'),
-    body('ingredients.*.ingredient').notEmpty().withMessage('Ingredient ID is required'),
+    body('ingredients.*.name').notEmpty().withMessage('Ingredient Name is required'),
     body('ingredients.*.quantity').notEmpty().withMessage('Ingredient quantity is required'),
     (req, res, next) => {
         const errors = validationResult(req);

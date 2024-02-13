@@ -10,7 +10,13 @@ import { handleCreateRecipe } from "../../../handlers/recipes/recipesHandlers.js
 const createRecipeController = async(req,res,next) => {
     try {
         const recipeData = req.body;
+        console.log('create recipe controler recipeData ',recipeData)
+        const { userId } = req.params;
+        
+        recipeData.userId = userId;
         const result = await handleCreateRecipe(recipeData);
+        console.log('create recipe controler result',result)
+        console.log(result);
         res.status(result.status).json(result.data);
     } catch (error) {
         console.log('error en createRecipeController', error);

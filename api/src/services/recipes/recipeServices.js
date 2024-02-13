@@ -1,5 +1,5 @@
 import { RecipeModel } from "../../db/models/recipeSchema.js";
-
+import { createOrGetIngredient } from "../ingredients/ingredientServices.js";
 /**
  * Servicio para crear una nueva receta.
  * @param {Object} recipeData - Datos de la receta a crear.
@@ -9,7 +9,13 @@ import { RecipeModel } from "../../db/models/recipeSchema.js";
 
 export const createRecipe = async (recipeData) => {
     try {
-        const newRecipe = await RecipeModel.create(recipeData);
+        console.log('recipeData services', recipeData)
+        //Asociar ingredientes a la receta
+        const associatedRecipeData = await associateIngredientsToRecipe(recipeData);
+        console.log('associatedRecipeData in create recipe services', associatedRecipeData)
+
+        //Crear la receta
+        const newRecipe = await RecipeModel.create(associatedRecipeData);
         return newRecipe;
     } catch (error) {
         console.log('error en recipeService creaeteRecipe', error)
@@ -17,12 +23,13 @@ export const createRecipe = async (recipeData) => {
     }
 }
 
+
+/**
+* Servicio para obtener todas las recetas.
+* @returns {Promise<Array>} - Lista de todas las recetas.
+* @throws {Error} - Error en caso de fallo.
+*/
 export const getAllRecipes = async () => {
-    /**
- * Servicio para obtener todas las recetas.
- * @returns {Promise<Array>} - Lista de todas las recetas.
- * @throws {Error} - Error en caso de fallo.
- */
     try {
         const recipes = await RecipeModel.find().populate('ingredients.ingredient');
         return recipes;
@@ -64,7 +71,7 @@ export const getRecipeById = async (recipeId) => {
 export const updateRecipeById = async (recipeId, updatedData) => {
 
     try {
-        const updateRecipe = await RecipeModel.findByIdAndUpdate(recipeId, updatedDate, { new: true });
+        const updateRecipe = await RecipeModel.findByIdAndUpdate(recipeId, updatedData, { new: true });
         if (!updateRecipe) {
             throw new Error('Recipe not found');
         }
@@ -82,7 +89,6 @@ export const updateRecipeById = async (recipeId, updatedData) => {
  * @throws {Error} - Error en caso de fallo.
  */
 
-
 export const deleteRecipeById = async (recipeId) => {
     try {
         const deletedRecipe = await RecipeModel.findByIdAndDelete(recipeId);
@@ -95,3 +101,34 @@ export const deleteRecipeById = async (recipeId) => {
         throw error;
     }
 }
+
+
+ /**
+  * Función pata asociar ingredientes a la receta.
+  * @param {Object} recipeData - Datos de la receta.
+  * @returns {Promise<Object>} - Datos de la receta con ingredientes asociados.
+  * @throws {Error} - Error en caso de fallo.
+  */
+
+ const associateIngredientsToRecipe = async (recipeData) => {
+     try {
+         if (!recipeData.ingredients || recipeData.ingredients.length === 0) {
+             throw new Error('At least one ingredient is required to create a recipe.');
+         }
+ 
+         const ingredientPromises = recipeData.ingredients.map(async (ingredientInfo) => {
+             const { name, quantity } = ingredientInfo;
+             const userId = recipeData.userId;
+ 
+             //Crear o recuperar el ingrediente y asociarlo a la receta
+             const ingredient = await createOrGetIngredient(name, userId);
+             return { ingredient: ingredient._id, quantity };
+         })
+         //Asociar los ingredientes a la receta con las cantidades
+         const associatedIngredients = await Promise.all(ingredientPromises);
+         return { ...recipeData, ingredients: associatedIngredients }
+     } catch (error) {
+         console.log('error en associateIngredientsToRecipe', error)
+         throw error;
+     }
+ };
