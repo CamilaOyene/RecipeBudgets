@@ -23,13 +23,13 @@ export const handleCreateIngredient = async (ingredientData) => {
             throw new Error('Nombre, unidad y costo por unidad son campos obligatorios.');
         }
 
-        // Crear o obtener el ingrediente
-        const newIngredient = await createOrGetIngredient(ingredientData.name, ingredientData.userId);
-        if (newIngredient) {
-            return { status: 201, data: newIngredient };
-        } else {
-            throw new Error('No se pudo crear el ingrediente.');
-        }
+       // Crear o obtener el ingrediente
+       const newIngredient = await createOrGetIngredient(ingredientData);
+       if (newIngredient) {
+           return { status: 201, data: newIngredient };
+       } else {
+           throw new Error('No se pudo crear el ingrediente.');
+       }
     } catch (error) {
         console.log('error en handleCreateIngredient:', error);
         throw error;

@@ -23,10 +23,10 @@ export const createIngredient = async (ingredientData) => {
  * @param {string} name -  nombre del ingrediente.
  * @param {string} userId - ID del usuario al que pertenece el ingrediente.
 */
-export const createOrGetIngredient = async (name, userId) => {
+export const createOrGetIngredient = async (ingredientData) => {
     try {
-        const existingIngredient = await IngredientModel.findOne({ name, userId });
-        return existingIngredient || createIngredient({ name, userId })
+        const existingIngredient = await IngredientModel.findOne({ name: ingredientData.name, userId: ingredientData.userId });
+        return existingIngredient || createIngredient(ingredientData)
     } catch (error) {
         console.log('error en createOrGetIngredient, services => ', error)
         throw error;
