@@ -1,3 +1,6 @@
+import { IngredientModel } from '../../db/models/ingredientSchema.js';
+import { RecipeModel } from '../../db/models/recipeSchema.js';
+import { createOrGetIngredient } from '../../services/ingredients/ingredientServices.js';
 import {
     createRecipe,
     getAllRecipes,
@@ -15,6 +18,17 @@ import {
 
 export const handleCreateRecipe = async (recipeData) => {
     try {
+        //Verifica que se proporcionen ingredientes y que sean válidos
+        if (!recipeData.ingredients || recipeData.ingredients.length === 0) {
+            throw new Error('No se proporcionaron ingredientes');
+        }
+
+        // Verifica si ya existe una receta con el mismo nombre
+        const existingRecipe = await RecipeModel.findOne({ name: recipeData.name });
+        if (existingRecipe) {
+            return { status: 404, data: 'Ya existe una receta con ese nombre' };
+        }
+        //Si no existe crea la nueva receta
         const newRecipe = await createRecipe(recipeData);
         return { status: 201, data: newRecipe };
     } catch (error) {
@@ -65,11 +79,58 @@ export const handleGetRecipeById = async (recipeId) => {
  * @throws {Error} - Error en caso de fallo.
  */
 
-export const handleUpdateRecipeById = async (recipeId, updateData) => {
+export const handleUpdateRecipeById = async (updateData) => {
 
     try {
-        const updatedRecipe = await updateRecipeById(recipeId, updateData);
-        return { status: 200, data: updatedRecipe }
+        const { recipeId, name, ingredients, instructions, userId } = updateData;
+
+        // Verificar que la receta exista
+        const existingRecipe = await RecipeModel.findById(recipeId);
+        if (!existingRecipe) {
+            return { status: 404, data: 'No existe una receta con ese ID' };
+        }
+
+        //Verificar si se está intentando cambiar el nombre de la receta 
+        if (name && name !== existingRecipe.name) {
+            console.log('Nombre de la receta existente:', existingRecipe.name);
+            const recipesWithSameName = await RecipeModel.find({ name });
+            console.log('Recetas con el mismo nombre:', recipesWithSameName);
+            const conflictingRecipe = recipesWithSameName.find(recipe => !recipe._id.equals(existingRecipe._id));
+            console.log('Receta conflictiva:', conflictingRecipe);
+            if (conflictingRecipe) {
+                return { status: 400, data: 'Ya existe una receta con ese nombre' };
+            }
+        
+        }
+
+        //Crear o actualizar ingredientes
+        const updatedIngredients = await Promise.all(
+            ingredients.map(async (ingredientData) => {
+                const { _id, name, unit, cost_per_unit, quantity, remove } = ingredientData;
+
+                if(remove){
+                    return null; // Marca el ingrediente para eliminar 
+                }
+                //Si el ingrediente tiene un _id, se mantiene en la receta
+                if (_id) {
+                    return { ingredient: _id, quantity }
+                } else {
+                    //Crear o recuperar el ingrediente
+                    const ingredient = await createOrGetIngredient({ name, unit, cost_per_unit, userId });
+
+                    return { ingredient: ingredient._id, quantity };
+                }
+            })
+        );
+        //Filtrar los ingredientes para eliminar los marcados 
+        const filteredIngredients = updatedIngredients.filter(ingredient => ingredient !== null);
+        //Actualizar  la receta 
+        const updatedRecipe = await RecipeModel.findByIdAndUpdate(recipeId, { name, ingredients: filteredIngredients, instructions }, { new: true });
+        if (!updatedRecipe) {
+            return { status: 404, data: 'Receta no encontrada' };
+        }
+        return { status: 200, data: updatedRecipe };
+
     } catch (error) {
         console.log('error en handleUpdateRecipeById', error);
         throw error;

@@ -10,11 +10,10 @@ import { createOrGetIngredient } from "../ingredients/ingredientServices.js";
 export const createRecipe = async (recipeData) => {
     try {
         console.log('recipeData services', recipeData)
-        //Asociar ingredientes a la receta
+        //Asociar ingredientes a la receta(si no existen los crea)
         const associatedRecipeData = await associateIngredientsToRecipe(recipeData);
-        console.log('associatedRecipeData in create recipe services', associatedRecipeData)
 
-        //Crear la receta
+        //Crear la receta en la base de datos
         const newRecipe = await RecipeModel.create(associatedRecipeData);
         return newRecipe;
     } catch (error) {
@@ -112,16 +111,12 @@ export const deleteRecipeById = async (recipeId) => {
 
  const associateIngredientsToRecipe = async (recipeData) => {
      try {
-         if (!recipeData.ingredients || recipeData.ingredients.length === 0) {
-             throw new Error('At least one ingredient is required to create a recipe.');
-         }
- 
          const ingredientPromises = recipeData.ingredients.map(async (ingredientInfo) => {
-             const { name, quantity } = ingredientInfo;
+             const { name,unit, cost_per_unit, quantity } = ingredientInfo;
              const userId = recipeData.userId;
  
-             //Crear o recuperar el ingrediente y asociarlo a la receta
-             const ingredient = await createOrGetIngredient(name, userId);
+             //Crea o recupera el ingrediente y lo asocia a la receta
+             const ingredient = await createOrGetIngredient({name,unit, cost_per_unit, userId});
              return { ingredient: ingredient._id, quantity };
          })
          //Asociar los ingredientes a la receta con las cantidades

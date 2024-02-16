@@ -10,9 +10,12 @@ import { handleUpdateRecipeById } from "../../../handlers/recipes/recipesHandler
 const updateRecipeByIdController = async (req, res, next) => {
     try {
         const updatedData = req.body;
-        const { recipeId } = req.params;
+        const { recipeId, userId } = req.params;
+
+        updatedData.userId = userId;
+        updatedData.recipeId = recipeId;
         
-        const result = await handleUpdateRecipeById(recipeId, updatedData);
+        const result = await handleUpdateRecipeById(updatedData);
         res.status(result.status).json(result.data);
     } catch (error) {
         console.log('error en updateRecipeByIdController', error);
