@@ -8,21 +8,19 @@ const UserSchema = new Schema({
     password: { type: String },
     role: { type: String, default: 'user' },
     recipes: [{
-        recipe: {
+       
             type: Schema.Types.ObjectId,
             ref: 'recipes',
-        }
+        
     }],
     ingredients: [{
-        ingredient:{
+       
             type: Schema.Types.ObjectId,
             ref: 'ingredients',
-        }
+        
     }]
 });
 
-UserSchema.pre('find', function () {
-    this.populate(['ingredients','recipes'])
-})
+
 
 export const UserModel = model("users", UserSchema)

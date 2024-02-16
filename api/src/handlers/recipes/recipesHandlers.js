@@ -82,7 +82,7 @@ export const handleGetRecipeById = async (recipeId) => {
 export const handleUpdateRecipeById = async (updateData) => {
 
     try {
-        const { recipeId, name, ingredients, instructions, userId } = updateData;
+        const { recipeId, name, ingredients, instructions,image, userId } = updateData;
 
         // Verificar que la receta exista
         const existingRecipe = await RecipeModel.findById(recipeId);
@@ -125,7 +125,7 @@ export const handleUpdateRecipeById = async (updateData) => {
         //Filtrar los ingredientes para eliminar los marcados 
         const filteredIngredients = updatedIngredients.filter(ingredient => ingredient !== null);
         //Actualizar  la receta 
-        const updatedRecipe = await RecipeModel.findByIdAndUpdate(recipeId, { name, ingredients: filteredIngredients, instructions }, { new: true });
+        const updatedRecipe = await RecipeModel.findByIdAndUpdate(recipeId, { name, ingredients: filteredIngredients, instructions, image }, { new: true });
         if (!updatedRecipe) {
             return { status: 404, data: 'Receta no encontrada' };
         }

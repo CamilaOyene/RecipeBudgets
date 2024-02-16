@@ -1,4 +1,5 @@
 import { IngredientModel } from '../../db/models/ingredientSchema.js';
+import { UserModel } from '../../db/models/userSchema.js';
 
 /**
  * Servicio para crear un nuevo ingrediente.
@@ -11,6 +12,12 @@ export const createIngredient = async (ingredientData) => {
     console.log('createingredient data ', ingredientData)
     try {
         const newIngredient = await IngredientModel.create(ingredientData);
+
+        //Asociar el ingrediente al usuario
+        const user = await UserModel.findById(ingredientData.userId);
+        user.ingredients.push(newIngredient._id);
+        await user.save();
+        
         return newIngredient;
     } catch (error) {
         console.log('error en createIngredient, services => ', error)

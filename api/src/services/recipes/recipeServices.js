@@ -1,4 +1,5 @@
 import { RecipeModel } from "../../db/models/recipeSchema.js";
+import { UserModel } from "../../db/models/userSchema.js";
 import { createOrGetIngredient } from "../ingredients/ingredientServices.js";
 /**
  * Servicio para crear una nueva receta.
@@ -15,6 +16,12 @@ export const createRecipe = async (recipeData) => {
 
         //Crear la receta en la base de datos
         const newRecipe = await RecipeModel.create(associatedRecipeData);
+
+        //Asociar la receta al usuario
+        const user = await UserModel.findById(recipeData.userId);
+        user.recipes.push(newRecipe._id);
+        await user.save();
+
         return newRecipe;
     } catch (error) {
         console.log('error en recipeService creaeteRecipe', error)
@@ -102,28 +109,28 @@ export const deleteRecipeById = async (recipeId) => {
 }
 
 
- /**
-  * Función pata asociar ingredientes a la receta.
-  * @param {Object} recipeData - Datos de la receta.
-  * @returns {Promise<Object>} - Datos de la receta con ingredientes asociados.
-  * @throws {Error} - Error en caso de fallo.
-  */
+/**
+ * Función pata asociar ingredientes a la receta.
+ * @param {Object} recipeData - Datos de la receta.
+ * @returns {Promise<Object>} - Datos de la receta con ingredientes asociados.
+ * @throws {Error} - Error en caso de fallo.
+ */
 
- const associateIngredientsToRecipe = async (recipeData) => {
-     try {
-         const ingredientPromises = recipeData.ingredients.map(async (ingredientInfo) => {
-             const { name,unit, cost_per_unit, quantity } = ingredientInfo;
-             const userId = recipeData.userId;
- 
-             //Crea o recupera el ingrediente y lo asocia a la receta
-             const ingredient = await createOrGetIngredient({name,unit, cost_per_unit, userId});
-             return { ingredient: ingredient._id, quantity };
-         })
-         //Asociar los ingredientes a la receta con las cantidades
-         const associatedIngredients = await Promise.all(ingredientPromises);
-         return { ...recipeData, ingredients: associatedIngredients }
-     } catch (error) {
-         console.log('error en associateIngredientsToRecipe', error)
-         throw error;
-     }
- };
+const associateIngredientsToRecipe = async (recipeData) => {
+    try {
+        const ingredientPromises = recipeData.ingredients.map(async (ingredientInfo) => {
+            const { name, unit, cost_per_unit, quantity } = ingredientInfo;
+            const userId = recipeData.userId;
+
+            //Crea o recupera el ingrediente y lo asocia a la receta
+            const ingredient = await createOrGetIngredient({ name, unit, cost_per_unit, userId });
+            return { ingredient: ingredient._id, quantity };
+        })
+        //Asociar los ingredientes a la receta con las cantidades
+        const associatedIngredients = await Promise.all(ingredientPromises);
+        return { ...recipeData, ingredients: associatedIngredients }
+    } catch (error) {
+        console.log('error en associateIngredientsToRecipe', error)
+        throw error;
+    }
+};
