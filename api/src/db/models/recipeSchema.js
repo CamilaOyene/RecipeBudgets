@@ -28,8 +28,17 @@ const RecipeSchema = new Schema({
         quantity: {
             type: Number,
             required: true
+        },
+        cost_ingredient:{
+            type:Number
         }
-    }]
+    }],
+    recipe_cost: {
+        type: Number
+    },
+    total_price: {
+        type: Number
+    },
 
 })
 
