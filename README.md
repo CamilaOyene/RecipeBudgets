@@ -7,11 +7,12 @@ RecipeBudgets es una aplicación diseñada para facilitar la tarea de cálculo d
 - Guardar recetas con detalles sobre ingredientes y sus precios.
 - Actualizar precios de ingredientes según sea necesario.
 - Generar automáticamente presupuestos al planificar nuevas recetas.
-- Modificar presupuestos en respuesta a cambios en costos, como costos laborales.
+- Modificar presupuestos en respuesta a cambios en costos, como costos de insumos o mano de obra.
 
 ## Tecnologías Utilizadas
 
 - Node.js
+- Express.js
 - React
 - MongoDB
 - Mongoose
